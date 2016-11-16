@@ -17,6 +17,30 @@ if (isset($_POST['action'])) {
         $response = $bd->query($sql, $data);
         $output['result'] = "ok"; 
                
-            }
+    }
+   if ($_POST['action'] == "getList" && !empty($_POST['id_user'])) {
+        $data = array(
+            'id_user' => $_POST['id_user'],
+        );    
+       
+        $sql = "SELECT * FROM produit WHERE id_user=:id_user";
+        $response = $bd->query($sql, $data);
+        if ($response) {
+            $output['result'] = $response;
+        }
+        else {
+            $output['error'] = "Erreur de récupération liste";
+        }
+   }
+    if ($_POST['action'] == "delete" && !empty($_POST['id'])) {
+        $data = array(
+            'id' => $_POST['id'],
+        );    
+       
+        $sql = "DELETE FROM produit WHERE id=:id";
+        $response = $bd->query($sql, $data);
+        $output['result'] = 'ok';
+
+   }
 }
 echo json_encode($output);

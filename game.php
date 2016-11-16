@@ -1,6 +1,6 @@
 <?php
 
-include_once "DBEntity.php";
+include_once "bd.php";
 
 class Game {
 	public $id;
