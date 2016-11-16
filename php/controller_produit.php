@@ -32,9 +32,9 @@ if (isset($_POST['action'])) {
             $output['error'] = "Erreur de récupération liste";
         }
    }
-    if ($_POST['action'] == "getListWithObjet" && !empty($_POST['nom'])) {
+    if ($_POST['action'] == "getListWithObjet" && !empty($_POST['name'])) {
         $data = array(
-            'nom' => $_POST['nom']
+            'nom' => $_POST['name']
         );    
 
         $sql = "SELECT * FROM produit WHERE nom=:nom"; 
