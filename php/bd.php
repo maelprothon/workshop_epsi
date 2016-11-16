@@ -1,9 +1,9 @@
 <?php
 
 class DB{
-	private $host = 'localhost';
-	private $username = 'root';
-	private $password = '';
+	private $host = 'prothon.me';
+	private $username = 'rootroot';
+	private $password = '8a7dd4a1';
 	private $database = 'easytroc';
 	private $db;
 
