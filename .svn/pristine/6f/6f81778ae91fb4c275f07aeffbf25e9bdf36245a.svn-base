@@ -1,0 +1,94 @@
+var mongoose = require('mongoose');
+
+var NEWSLETTTER_MODEL = 'newsletters';
+var DIFFUSION_MODEL = 'diffusions';
+var USER_MODEL = 'users';
+var ADMIN_MODEL = 'admins';
+
+var newsLettersSchema = mongoose.Schema({
+    nom: String,
+    destinataire: String,
+    diffusions: [String],
+    sujet: String,
+    corps: String,
+    elementModel: String
+});
+
+var diffusionsSchema = mongoose.Schema({
+    nom: String,
+    users: [String],
+    elementModel: String
+});
+
+var usersSchema = mongoose.Schema({
+    nom: String,
+    prenom: String,
+    email: String,
+    elementModel: String
+});
+
+var adminSchema = mongoose.Schema({
+    nom: String,
+    email: String,
+    password: String,
+    elementModel: String
+});
+
+
+
+newsLettersSchema.methods.exist = function (name, result) {
+    elementExist(NEWSLETTTER_MODEL, name, result);
+};
+
+diffusionsSchema.methods.exist = function (name, result) {
+    elementExist(DIFFUSION_MODEL, name, result);
+};
+
+adminSchema.methods.exist = function (name, result) {
+    elementExist(ADMIN_MODEL, name, result);
+};
+
+usersSchema.methods.exist = function (name, result) {
+
+    elementExist(USER_MODEL, name, result);
+};
+
+diffusionsSchema.methods.updateElement = function (diffusion, result) {
+    this.model(DIFFUSION_MODEL).update({nom: diffusion.nom}, {$set: {users: diffusion.users}}, function (err, nbDiffusionModified) {
+        if (err)
+            return result(true, err, null);
+        return result(false, 'element updated', null);
+    });
+};
+
+adminSchema.methods.updateElement = function (admin, result) {
+    this.model(ADMIN_MODEL).update({_id: admin._id}, {$set: {login: admin.login, password: admin.password}}, function (err, nbDiffusionModified) {
+        if (err)
+            return result(true, err, null);
+        return result(false, 'element updated', null);
+    });
+};
+
+
+var elementExist = function (elementModel, name, result) {
+    mongoose.model(elementModel).find({nom: name}, function (err, diffusions) {
+        if (diffusions.length > 0) {
+            return result(true);
+        }
+        return result(false);
+    });
+};
+
+mongoose.model(NEWSLETTTER_MODEL, newsLettersSchema);
+mongoose.model(DIFFUSION_MODEL, diffusionsSchema);
+mongoose.model(USER_MODEL, usersSchema);
+mongoose.model(ADMIN_MODEL, adminSchema);
+
+
+
+exports.getModel = function (modelName) {
+    if ((modelName === null) || (modelName === undefined)) {
+        return null;
+    }
+    return  mongoose.model(modelName);
+};

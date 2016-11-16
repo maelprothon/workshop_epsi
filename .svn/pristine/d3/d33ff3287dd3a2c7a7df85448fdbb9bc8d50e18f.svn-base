@@ -1,0 +1,116 @@
+var mongoose = require('mongoose');
+var elementsModel = require('./elementsModel');
+mongoose.connect('mongodb://localhost/NewsLettersDb');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error !'));
+db.once('open', function () {
+    console.log("connected to 'NewsLettersDb' data base");
+});
+
+
+var dataBaseManager = {
+    //insert element
+    createElement: function (element, result) {
+        var elementModel = elementsModel.getModel(element.elementModel);
+        if (elementModel !== null) {
+            var elementDocument = new elementModel(element);
+            elementDocument.exist(element.nom, function (isElementExist) {
+
+                if (!isElementExist) {
+                    elementDocument.save(function (err, newsLetter) {
+                        if (err)
+                            return result(true, err);
+                        return result(false, 'element added', newsLetter);
+                    });
+                } else {
+                    return result(true, 'element already exsist !');
+                }
+            });
+        } else {
+            return result(true, 'elementModel not exist !');
+        }
+    },
+    createElements: function (index, elements, addedElements, result) {
+        var _this = this;
+        if (index < elements.length) {
+            _this.createElement(elements[index], function (isErr, msg, newElements) {
+                if (!isErr) {
+                    addedElements.push(newElements);
+                } else {
+                    return result(isErr, msg);
+                }
+                index++;
+                _this.createElements(index, elements, addedElements, result);
+            });
+        } else {
+            result(false, 'elements added !', addedElements);
+        }
+
+    },
+    //find element
+    findElements: function (elementModel_, result) {
+        var elementModel = elementsModel.getModel(elementModel_);
+        if (elementModel !== null) {
+            elementModel.find(function (err, elements) {
+                if (err)
+                    return result(true, err, null);
+                return result(false, '', elements);
+            });
+        } else {
+            return result(true, 'elementModel = null');
+        }
+    },
+    //findOne element
+    findElementByName: function (element, result) {
+        var elementModel = elementsModel.getModel(element.elementModel);
+        if (elementModel !== null) {
+            elementModel.find({nom: element.nom}, function (err, element) {
+                if (err)
+                    return result(true, err, null);
+                return result(false, '', element);
+            });
+        } else {
+            return result(true, 'elementModel = null');
+        }
+    },
+    //update element
+    updateElement: function (element, result) {
+        var elementModel = elementsModel.getModel(element.elementModel);
+        if (elementModel !== null) {
+            var elementDocument = new elementModel(element);
+            elementDocument.updateElement(element, result);
+        } else {
+            return result(true, 'elementModel = null');
+        }
+    },
+    //remove element
+    removeElement: function (element, result) {
+        var elementModel = elementsModel.getModel(element.elementModel);
+        if (elementModel !== null) {
+            elementModel.findOneAndRemove({nom: element.nom}, function (err, element) {
+                if (err)
+                    return result(true, err);
+                return result(false, 'element deleted', element);
+            });
+        } else {
+            return result(true, 'elementModel = null');
+        }
+    },
+    //search a user
+    searchElement: function (_elementModel, _nom, result) {
+        var nom = '/^' + _nom + '/';
+        var elementModel = elementsModel.getModel(_elementModel);
+        if (elementModel !== null) {
+            elementModel.find({nom: {$in: [_nom]}}, function (err, elements) {
+                console.log('elements = ' + JSON.stringify(elements));
+                if (err)
+                    return result(true, err);
+                return result(false, '', elements);
+            });
+        } else {
+            return result(true, 'elementModel = null');
+        }
+    }
+};
+
+module.exports = dataBaseManager;
