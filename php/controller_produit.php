@@ -18,20 +18,34 @@ if (isset($_POST['action'])) {
         $output['result'] = "ok"; 
                
     }
-   if ($_POST['action'] == "getList" && !empty($_POST['id_user'])) {
+   if ($_POST['action'] == "getListWithUser" && !empty($_POST['id_user'])) {
         $data = array(
-            'id_user' => $_POST['id_user'],
+            'id_user' => $_POST['id_user']
         );    
-       
-        $sql = "SELECT * FROM produit WHERE id_user=:id_user";
+
+        $sql = "SELECT * FROM produit WHERE id_user=:id_user"; 
         $response = $bd->query($sql, $data);
         if ($response) {
             $output['result'] = $response;
         }
         else {
-            $output['error'] = "Erreur de r�cup�ration liste";
+            $output['error'] = "Erreur de récupération liste";
         }
    }
+    if ($_POST['action'] == "getListWithObjet" && !empty($_POST['nom'])) {
+        $data = array(
+            'nom' => $_POST['nom']
+        );    
+
+        $sql = "SELECT * FROM produit WHERE nom=:nom"; 
+        $response = $bd->query($sql, $data);
+        if ($response) {
+            $output['result'] = $response;
+        }
+        else {
+            $output['error'] = "Erreur de récupération liste";
+        }
+    }
     if ($_POST['action'] == "delete" && !empty($_POST['id'])) {
         $data = array(
             'id' => $_POST['id'],
