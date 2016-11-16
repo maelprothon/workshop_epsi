@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 /nbproject/private/
 /nbprojet/project.properties
 /nbprojet/project.xml
+=======
+nbproject/private/
+nbproject
+nbproject/*
+>>>>>>> 900a086329fd40a490b565a43c1acf1562484309
