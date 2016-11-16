@@ -1,4 +1,11 @@
 <<<<<<< HEAD
+/node_modules
+/dist
+/.tmp
+/.sass-cache
+/bower_components
+=======
+<<<<<<< HEAD
 /nbproject/private/
 /nbprojet/project.properties
 /nbprojet/project.xml
@@ -7,3 +14,4 @@ nbproject/private/
 nbproject
 nbproject/*
 >>>>>>> 900a086329fd40a490b565a43c1acf1562484309
+>>>>>>> 9c2cb6a6f09f95a3b94f1894623312354fccfb83

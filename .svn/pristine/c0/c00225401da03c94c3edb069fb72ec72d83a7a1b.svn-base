@@ -1,0 +1,103 @@
+var mail_sender = require('./mailSender');
+var dataBaseManager = require('./dataBaseManager');
+var multer = require('multer'); // v1.0.5
+var upload = multer(); // for parsing multipart/form-data
+
+var adminByDefault = {
+    nom: 'admin1',
+    email: 'admin@admin.fr',
+    password: '123',
+    elementModel: 'admins'
+};
+
+exports.init = function (app) {
+
+    //create the default admin
+    dataBaseManager.createElement(adminByDefault, function (isErr, msg, elements) {
+        if (isErr) {
+            msg = 'ERROR : ' + msg;
+        }
+        console.log(msg + '\n');
+    });
+
+    //get elements
+    app.get('/getElement/:elementModel', function (req, res) {
+        var elementModel = req.params.elementModel;
+        dataBaseManager.findElements(elementModel, function (isErr, msg, elements) {
+            done(res, isErr, msg, elements);
+        });
+    });
+
+    //get elements
+    app.get('/searchElement/:nom', function (req, res) {
+        var elementModel = req.params.nom;
+        dataBaseManager.findElements(elementModel, function (isErr, msg, elements) {
+            done(res, isErr, msg, elements);
+        });
+    });
+
+    //create element
+    app.post('/createElement', function (req, res) {
+        dataBaseManager.createElement(req.body, function (isErr, msg, elements) {
+            done(res, isErr, msg, elements);
+        });
+    });
+
+    //create elements
+    app.post('/createElements', function (req, res) {
+        var addedElements = [];
+        var index = 0;
+        dataBaseManager.createElements(index, req.body, addedElements, function (isErr, msg, elements) {
+            done(res, isErr, msg, elements);
+        });
+    });
+
+    //update element
+    app.post('/updateElement', function (req, res) {
+        dataBaseManager.updateElement(req.body, function (isErr, msg, elements) {
+            done(res, isErr, msg, elements);
+        });
+    });
+
+    //delete elements
+    app.post('/deleteElement', function (req, res) {
+        dataBaseManager.removeElement(req.body, function (isErr, msg, elements) {
+            done(res, isErr, msg, elements);
+        });
+    });
+
+    // mail sender
+    app.post('/sendMail', function (req, res) {
+        var email = req.body;
+        console.log('email = ' + JSON.stringify(email));
+        mail_sender.sendEmailToMTA(email, function (isErr, msg) {
+            done(res, isErr, msg, null);
+        });
+    });
+};
+
+function success(res, msg, elements) {
+    var result = {
+        status: 1,
+        message: msg,
+        elements: elements
+    };
+    return  res.status(200).send(JSON.stringify(result));
+}
+
+function error(res, msg) {
+    var result = {
+        status: 0,
+        message: msg
+    };
+    return  res.status(200).send(JSON.stringify(result));
+}
+
+function done(res, isErr, msg, elements) {
+    if (isErr) {
+        return error(res, msg);
+    }
+    return success(res, msg, elements);
+}
+
+
