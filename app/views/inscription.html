@@ -1,1 +1,35 @@
-<p>This is the inscription view.</p>
+<style type="text/css">.ng-invalid { border-color: #B94A48; }</style>
+	<h1>Inscription</h1>
+	<form name="ajoutUtilisateur" ng-controller="InscriptionCtrl" ng-submit="soumission(ajoutUtilisateur.$valid)">
+	  <div class="form-group">
+	    <label for="nom">Nom :</label>
+	    <input type="text" class="form-control" id="nom" placeholder="Votre nom" ng-model="user.name" required>
+	  </div>
+	  <div class="form-group">
+	    <label for="nom">Prénom :</label>
+	    <input type="text" class="form-control" id="prenom" placeholder="Votre prénom" ng-model="user.firstname" required>
+	  </div>
+          <div class="form-group">
+	    <label for="nom">Mot de passe :</label>
+	    <input type="password" class="form-control" id="mdp" ng-model="user.password" required>
+	  </div>
+          <div class="form-group">
+	    <label for="nom">Login :</label>
+	    <input type="text" class="form-control" id="login" placeholder="Votre prénom" ng-model="user.login" required>
+	  </div>
+          <div class="form-group">
+	    <label for="nom">Adresse :</label>
+	    <input type="text" class="form-control" id="adresse" placeholder="Votre prénom" ng-model="user.address" required>
+	  </div>
+          <div class="form-group">
+	    <label for="nom">Code postale :</label>
+	    <input type="text" class="form-control" id="city" placeholder="Votre prénom" ng-model="user.codepostal" required>
+	  </div>
+          <div class="form-group">
+	    <label for="nom">City :</label>
+	    <input type="text" class="form-control" id="city" placeholder="Votre prénom" ng-model="user.city" required>
+	  </div>
+            
+	  <div class="alert" ng-class="messageClass" ng-show="message">{{message}}</div>
+	  <button class="btn btn-default" type="submit">Envoyer</button>
+	</form>

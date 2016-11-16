@@ -1,29 +1,33 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Content-Type");
 
 include_once 'bd.php';
 $bd = new DB();
 $output = array('error' => '');
 session_start();
-if (isset($_POST['action'])) {
-    if ($_POST['action'] == "create" && !empty($_POST['name']) && !empty($_POST['firstname'])
-            && !empty($_POST['password']) && !empty($_POST['login']) && !empty($_POST['address']) && !empty($_POST['codepostal']) && !empty($_POST['city']) ) {
+$postdata = file_get_contents("php://input");
+$request = json_decode($postdata, true);
+if (isset($request['action'])) {
+    if ($request['action'] == "create" && !empty($request['name']) && !empty($request['firstname'])
+            && !empty($request['password']) && !empty($request['login']) && !empty($request['address']) && !empty($request['codepostal']) && !empty($request['city']) ) {
         $data = array(
-            'name' => $_POST['name'],
-            'firstname' => $_POST['firstname'],
-            'password' => md5($_POST['password']),
-            'login' => $_POST['login'],
-            'address' => $_POST['address'],
-            'codepostal' => $_POST['codepostal'],
-            'city' => $_POST['city']
+            'name' => $request['name'],
+            'firstname' => $request['firstname'],
+            'password' => md5($request['password']),
+            'login' => $request['login'],
+            'address' => $request['address'],
+            'codepostal' => $request['codepostal'],
+            'city' => $request['city']
         );
         $sql = "INSERT INTO utilisateur(nom, prenom, mdp, login, adresse, codepostale, city) VALUES(:name, :firstname, :password, :login, :address, :codepostal, :city)";
         $response = $bd->query($sql, $data);
         $output['result'] = $response;
     }
-    else if ($_POST['action'] == "connect" && !empty($_POST['login']) && !empty($_POST['password']) ) {
+    else if ($request['action'] == "connect" && !empty($request['login']) && !empty($request['password']) ) {
         $data = array(
-            'login' => $_POST['login'],
-            'password' => md5($_POST['password'])
+            'login' => $request['login'],
+            'password' => md5($request['password'])
         );
         $sql = "SELECT * FROM utilisateur WHERE login=:login AND mdp=:password";
         $response = $bd->query($sql, $data);
@@ -35,7 +39,7 @@ if (isset($_POST['action'])) {
             $output['error'] = "Connexion impossible";
         }
     }
-    else if ($_POST['action'] == "getList") {
+    else if ($request['action'] == "getList") {
        
         $sql = "SELECT * FROM utilisateur";
         $response = $bd->query($sql);
