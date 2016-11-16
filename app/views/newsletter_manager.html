@@ -1,0 +1,39 @@
+<!-- Connected info -->
+<div ng-show="infomation"class="alert alert-success" role="alert">
+    <a href="#" class="alert-link">Connecté</a>
+</div>
+
+<!-- inlclude  connexion-->
+<div ng-show="connected && (creation || update)" ng-include="model" class="jumbotron">
+</div>
+
+<!-- Connexion -->
+<div ng-show="!connected"class="jumbotron">
+    <form class="form-signin">
+        <h2 class="form-signin-heading">Connexion</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" ng-model="login.email"
+               class="form-control" placeholder="Email" required="" autofocus="">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" ng-model="login.password" 
+               class="form-control" placeholder="Mot de passe" required="">
+        <div class="checkbox">
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="connect(login)">Sign in</button>
+    </form>
+</div>
+
+<!-- Liste Newsletter -->
+<div ng-show="connected && !creation && !update" id="newsLatters_manager" class="jumbotron ">
+    <div class="list-group liste_elements">
+        <div class="list-group-item active">
+            Liste newsletter
+        </div>   
+        <div id="item_newsLetter" ng-repeat="newsletter in newsLetters" class="list-group-item">    
+            <span>{{newsletter.nom}}</span>
+              <span class="glyphicon glyphicon-remove-circle" ng-click="deleteNewsletter(newsletter)"> </span>   
+             <span class="glyphicon glyphicon-send" ng-click="sendNewsletter(newsletter)"> </span>                 
+        </div>       
+    </div>
+    <button id="ajouter_newletter" class="btn btn-success" type="submit" ng-click="addNewsletter()">Ajouter</button>
+</div>
