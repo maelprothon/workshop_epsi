@@ -10,7 +10,7 @@
 angular.module('webIhmApp')
   .controller('UsersCtrl', function ($scope, $http) {      
         console.log('ok');
-        $http.get('http://easytroc.prothon.me/workshop_epsi/php/controller_user.php?action=getList')
+        $http.get('http://localhost/workshop_epsi/php/controller_user.php?action=getList')
         .then(function(response) {
             $scope.users = response.data.result;
             var title = "";
@@ -26,7 +26,7 @@ angular.module('webIhmApp')
             '</div>'+
             '<h1 id="firstHeading" class="firstHeading">'+title+'</h1>'+
             '<div id="bodyContent">'+
-            '<p>'+address+'<br/><a href="/produits">'+
+            '<p>'+address+'<br/><a href="#/profil/'+iduser+'">'+
             'Voir ses produits</a> </p>'+
             '</div>'+
             '</div>';
