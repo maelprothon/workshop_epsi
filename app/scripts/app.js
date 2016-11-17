@@ -48,6 +48,11 @@ angular
                       controller: 'ProfilCtrl',
                       controllerAs: 'profil'
                     })
+                    .when('/produit/:id', {
+                      templateUrl: 'views/produit.html',
+                      controller: 'ProduitCtrl',
+                      controllerAs: 'produit'
+                    })
                     .otherwise({
                         redirectTo: '/home'
                     });

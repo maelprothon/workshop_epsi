@@ -61,5 +61,19 @@ if (isset($request['action'])) {
         $output['result'] = 'ok';
 
    }
+   if ($request['action'] == "getProduct" && !empty($request['id'])) {
+        $data = array(
+            'id' => $request['id']
+        );    
+
+        $sql = "SELECT * FROM produit WHERE id=:id"; 
+        $response = $bd->query($sql, $data);
+        if ($response) {
+            $output['result'] = $response;
+        }
+        else {
+            $output['error'] = "Erreur de récupération produit";
+        }
+    }
 }
 echo json_encode($output);
