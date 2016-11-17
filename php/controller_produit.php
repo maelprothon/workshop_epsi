@@ -2,15 +2,17 @@
 include_once 'bd.php';
 $bd = new DB();
 $output = array('error' => '');
-if (isset($_POST['action'])) {
-    if ($_POST['action'] == "create" && !empty($_POST['name']) && !empty($_POST['id_user'])
-            && !empty($_POST['type']) && !empty($_POST['categorie']) ) {
+$postdata = file_get_contents("php://input");
+$request = json_decode($postdata, true);
+if (isset($request['action'])) {
+    if ($request['action'] == "create" && !empty($request['name']) && !empty($request['id_user'])
+            && !empty($request['type']) && !empty($request['categorie']) ) {
         $data = array(
-            'name' => $_POST['name'],
-            'id_user' => $_POST['id_user'],
-            'type' => $_POST['type'],
-            'categorie' => $_POST['categorie'],
-            'description' => $_POST['description']
+            'name' => $request['name'],
+            'id_user' => $request['id_user'],
+            'type' => $request['type'],
+            'categorie' => $request['categorie'],
+            'description' => $request['description']
         );
 
         $sql = "INSERT INTO produit(nom,id_user,type,id_categorie,description) VALUES(:name,:id_user,:type,:categorie,:description)";
@@ -18,9 +20,9 @@ if (isset($_POST['action'])) {
         $output['result'] = "ok"; 
                
     }
-   if ($_POST['action'] == "getListWithUser" && !empty($_POST['id_user'])) {
+   if ($request['action'] == "getListWithUser" && !empty($request['id_user'])) {
         $data = array(
-            'id_user' => $_POST['id_user']
+            'id_user' => $request['id_user']
         );    
 
         $sql = "SELECT * FROM produit WHERE id_user=:id_user"; 
@@ -32,9 +34,9 @@ if (isset($_POST['action'])) {
             $output['error'] = "Erreur de récupération liste";
         }
    }
-    if ($_POST['action'] == "getListWithObjet" && !empty($_POST['name'])) {
+    if ($request['action'] == "getListWithObjet" && !empty($request['name'])) {
         $data = array(
-            'nom' => $_POST['name']
+            'nom' => $request['name']
         );    
 
         $sql = "SELECT * FROM produit WHERE nom=:nom"; 
@@ -46,9 +48,9 @@ if (isset($_POST['action'])) {
             $output['error'] = "Erreur de récupération liste";
         }
     }
-    if ($_POST['action'] == "delete" && !empty($_POST['id'])) {
+    if ($request['action'] == "delete" && !empty($request['id'])) {
         $data = array(
-            'id' => $_POST['id'],
+            'id' => $request['id'],
         );    
        
         $sql = "DELETE FROM produit WHERE id=:id";

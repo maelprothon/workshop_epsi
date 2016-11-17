@@ -39,7 +39,9 @@ if (isset($request['action'])) {
             $output['error'] = "Connexion impossible";
         }
     }
-    else if ($request['action'] == "getList") {
+}
+if(!empty($_GET['action'])) {
+    if ($_GET['action'] == "getList") {
        
         $sql = "SELECT * FROM utilisateur";
         $response = $bd->query($sql);

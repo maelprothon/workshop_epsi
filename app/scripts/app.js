@@ -33,6 +33,10 @@ angular
                       controller: 'InscriptionCtrl',
                       controllerAs: 'inscription'
                     })
+                    .when('/listusers', {
+                      templateUrl: 'views/listusers.html',
+                      controller: 'UsersCtrl'
+                    })
                     .otherwise({
                         redirectTo: '/home'
                     });
