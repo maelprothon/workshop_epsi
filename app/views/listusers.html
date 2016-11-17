@@ -16,6 +16,25 @@ and open the template in the editor.
             <div ng-repeat="user in users">
                 {{user.content.nom}}
             </div>
+            <div id="map"></div>
         </div>
+        <script>
+        var geocoder;
+        var map;
+        function initMap() {
+            // Create a map object and specify the DOM element for display.
+            geocoder = new google.maps.Geocoder();
+
+            map = new google.maps.Map(document.getElementById('map'), {
+              center: {lat: 43.6, lng: 3.8833},
+              scrollwheel: false,
+              zoom: 8
+            });
+          }
+
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaGfppTtD-8tFOs3mDvs1XJ3kd__YuKvU&callback=initMap"
+        async defer></script>
     </body>
+    
 </html>
