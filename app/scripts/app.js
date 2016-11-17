@@ -37,6 +37,16 @@ angular
                       templateUrl: 'views/listusers.html',
                       controller: 'UsersCtrl'
                     })
+                    .when('/myroute', {
+                      templateUrl: 'views/myroute.html',
+                      controller: 'MyrouteCtrl',
+                      controllerAs: 'myroute'
+                    })
+                    .when('/Profil', {
+                      templateUrl: 'views/profil.html',
+                      controller: 'ProfilCtrl',
+                      controllerAs: 'Profil'
+                    })
                     .otherwise({
                         redirectTo: '/home'
                     });
