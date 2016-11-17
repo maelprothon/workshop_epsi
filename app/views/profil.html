@@ -2,16 +2,16 @@
 	<h1>Liste des produits</h1>
         
         <div class="border">
-            <table border="2" >
-                <tr>
-                    <th>Produit</th>
-                    <th>Action</th>
+            <table  class ="table" >
+                <tr class ="my_tr">
+                    <th class="my_th">Produit</th>
+                    <th class="my_th">Action</th>
                 </tr>
-                <tr ng-repeat="produit in produits">
-                    <td>{{produit.nom}}</td>
+                <tr class="my_td" ng-repeat="produit in produits">
+                    <td>{{produit.nom}} <img  class="my_img" src="images/{{produit.id}}.jpg"></td>
                     <td>
-                        <button ng-click="reserveproduit(produit)" style="padding-right: 20px; padding-left: 10px; "  class="glyphicon glyphicon-ok">Réserver</button>
-                        <button ng-click="voirdetailproduit(produit)" style="padding-right: 20px;"  class="glyphicon glyphicon-eye-open">Voir</button>
+                        <button  id="my_button" ng-click="reserveproduit(produit)" style="padding-right: 20px; padding-left: 10px; "  class="glyphicon glyphicon-ok">Réserver</button>
+                        <button  id="my_button" ng-click="voirdetailproduit(produit)" style="padding-right: 20px;"  class="glyphicon glyphicon-eye-open">Voir</button>
                     </td>  
                 </tr>
             </table>

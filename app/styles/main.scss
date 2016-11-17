@@ -98,6 +98,33 @@ p {
   font-size: 20px;
 }
 
+.table{
+    font-size: 20px;
+}
+.my_img{
+    width: 70px;
+    height: 70px;
+}
+.my_tr{
+    border-radius: 2px solid;
+    border:5px;
+}
+.my_td{
+    border-radius: 2px solid white;
+    border:5px;
+}
+.my_th{
+    text-align: center;
+    font-size: 24px;
+}
+#my_button{
+    background-color:#18BC9C;
+    font-size: 18px;
+    padding:10px ;
+    border: 3px solid white;
+    border-radius: 2px solid;
+}
+
 .border{
 border: 5px solid white;
 border-radius: 25px;
