@@ -1,0 +1,17 @@
+<style type="text/css">.ng-invalid { border-color: #B94A48; }</style>
+	<h1>Produit {{ product.nom}}</h1>
+        
+        <div class="borderwhite" style="margin: 5px;">
+            Nom : {{product.nom}}
+        </div>
+        <div class="borderwhite" style="margin: 5px;">
+            Description : {{product.description}}
+        </div>
+        <div class="borderwhite" style="margin: 5px;">
+            Prix : {{product.prix}}
+        </div>
+        <div class="borderwhite" style="margin: 5px;">
+            <img src="images/{{product.id}}.jpg" width="400" />
+        </div>
+        <br/>
+        <button class="btn btn-success" ng-click="reserveproduit(product)">Réserver</button>
