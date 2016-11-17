@@ -7,6 +7,7 @@ session_start();
 //die(var_dump($request));
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata, true);
+
 if (isset($request['action'])) {
     if ($request['action'] == "CreatePret" && !empty($request['id_user_1']) && !empty($request['id_produit'])) {
         
@@ -22,8 +23,7 @@ if (isset($request['action'])) {
     }
     
     //update table pret avec la valeur du status , les commentaires er la notation
-    
-    if ($request['action'] == "UpdateValidePret" && $request['id']) {
+    else if ($request['action'] == "UpdateValidePret" && $request['id']) {
         $datestart = new DateTime();
         $datestart = $datestart->format("Y-m-d H:i:s");
         $data = array(
@@ -35,7 +35,6 @@ if (isset($request['action'])) {
     }
     
     //Mis a jour de la table pret à la fin du pret
-    
     else if ($request['action'] == "UpdateEndPret" && $request['token']) {
         $dateend = new DateTime();
         $dateend = $dateend->format("Y-m-d H:i:s");
@@ -54,8 +53,8 @@ if (isset($request['action'])) {
         }     
     }
     // add commentaire/note à la fin du prêt
-    
-    if ($request['action'] == "AddCom_notPret" && $request['id'] && $request['commentaire'] && $request['notation']) {
+
+    else if ($request['action'] == "AddCom_notPret" && $request['id'] && $request['commentaire'] && $request['notation']) {
         $data = array(
             'id' => $request['id'],
             'commentaire' => $request['commentaire'],

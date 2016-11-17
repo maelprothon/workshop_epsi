@@ -36,10 +36,13 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="page-scroll">
+                        <li class="navs" ng-show="connect===true">
+                            <a href="#/">Bienvenue {{loggedUser.name}}  {{loggedUser.firstname}} {{loggedUser.cagnotte}} <span class="glyphicon glyphicon-btc"></span></a>
+                        </li>
+                        <li ng-show="connect!==true" class="page-scroll">
                             <a href="#/connexion">Connexion</a>
                         </li>
-                        <li class="page-scroll">
+                        <li ng-show="connect!==true"  class="page-scroll">
                             <a href="#/inscription">Inscription</a>
                         </li>
                     </ul>
@@ -89,6 +92,7 @@
         <script src="scripts/controllers/connexion.js"></script>
         <script src="scripts/controllers/home.js"></script>
         <script src="scripts/controllers/inscription.js"></script>
+        <script src="scripts/controllers/produits.js"></script>
         <script src="scripts/controllers/users.js"></script>
 
         <!-- endbuild -->
