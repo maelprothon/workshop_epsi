@@ -35,7 +35,8 @@ angular
                     })
                     .when('/listusers', {
                       templateUrl: 'views/listusers.html',
-                      controller: 'UsersCtrl'
+                      controller: 'UsersCtrl',
+                      controllerAs: 'users'
                     })
                     .otherwise({
                         redirectTo: '/home'
