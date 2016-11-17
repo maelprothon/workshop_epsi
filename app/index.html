@@ -9,8 +9,6 @@
         <!-- build:css(.) styles/vendor.css -->
         <!-- bower:css -->
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="https://developers.google.com/maps/documentation/javascript/demos/demos.css">
-
         <!-- endbower -->
         <!-- endbuild -->
         <!-- build:css(.tmp) styles/main.css -->
@@ -37,7 +35,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
                         <li class="navs" ng-show="connect===true">
-                            <a href="#/">Bienvenue {{loggedUser.name}}  {{loggedUser.firstname}} {{loggedUser.cagnotte}} <span class="glyphicon glyphicon-btc"></span></a>
+                            <a href="#/produits">Bienvenue {{loggedUser.name}}  {{loggedUser.firstname}} {{loggedUser.cagnotte}} <span class="glyphicon glyphicon-btc"></span></a>
                         </li>
                         <li ng-show="connect!==true" class="page-scroll">
                             <a href="#/connexion">Connexion</a>
