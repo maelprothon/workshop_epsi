@@ -29,7 +29,7 @@ angular.module('webIhmApp')
     $scope.login = function () {
         var req = {
             method: 'POST',
-            url: 'http://localhost/workshop_epsi/php/controller_user.php',
+            url: 'http://easytroc.prothon.me/workshop_epsi/php/controller_user.php',
             data: $scope.loguser,
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
          };
