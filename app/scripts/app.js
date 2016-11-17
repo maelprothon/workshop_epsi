@@ -33,20 +33,20 @@ angular
                       controller: 'InscriptionCtrl',
                       controllerAs: 'inscription'
                     })
+                    .when('/produits', {
+                      templateUrl: 'views/produits.html',
+                      controller: 'ProduitsCtrl',
+                      controllerAs: 'produits'
+                      })
                     .when('/listusers', {
                       templateUrl: 'views/listusers.html',
                       controller: 'UsersCtrl',
                       controllerAs: 'users'
                     })
-                    .when('/myroute', {
-                      templateUrl: 'views/myroute.html',
-                      controller: 'MyrouteCtrl',
-                      controllerAs: 'myroute'
-                    })
-                    .when('/Profil', {
+                    .when('/profil', {
                       templateUrl: 'views/profil.html',
                       controller: 'ProfilCtrl',
-                      controllerAs: 'Profil'
+                      controllerAs: 'profil'
                     })
                     .otherwise({
                         redirectTo: '/home'
