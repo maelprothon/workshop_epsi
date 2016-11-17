@@ -47,12 +47,15 @@
                         </li>
                         <li ng-show="connect==true"  class="page-scroll">
                             <a href="#/listusers">Carte</a>
+                        <li ng-show="connect!==true" class="page-scroll">
+                            <a href="#/profil">Profil</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
         <!-- Header -->
+        
         <header>
             <div ng-view="" class="container">
             </div>
@@ -97,6 +100,10 @@
         <script src="scripts/controllers/inscription.js"></script>
         <script src="scripts/controllers/produits.js"></script>
         <script src="scripts/controllers/users.js"></script>
+
+        <script src="scripts/controllers/profil.js"></script>
+
+
 
         <!-- endbuild -->
     </body>

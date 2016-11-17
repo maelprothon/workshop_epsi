@@ -43,6 +43,11 @@ angular
                       controller: 'UsersCtrl',
                       controllerAs: 'users'
                     })
+                    .when('/profil', {
+                      templateUrl: 'views/profil.html',
+                      controller: 'ProfilCtrl',
+                      controllerAs: 'profil'
+                    })
                     .otherwise({
                         redirectTo: '/home'
                     });
