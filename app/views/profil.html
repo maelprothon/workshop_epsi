@@ -7,18 +7,14 @@
                     <th>Produit</th>
                     <th>Action</th>
                 </tr>
-                <tr ng-repeat="produits in produit">
-                    <td>{{produits.nom}}</td>
+                <tr ng-repeat="produit in produits">
+                    <td>{{produit.nom}}</td>
                     <td>
-                        <span ng-click="erase" class="glyphicon glyphicon-ok">reserver</span>
-                        <span ng-click="reserver" class="glyphicon glyphicon-eye-open">voir</span>
+                        <button ng-click="reserveproduit(produit)" style="padding-right: 20px; padding-left: 10px; "  class="glyphicon glyphicon-ok">Réserver</button>
+                        <button ng-click="voirdetailproduit(produit)" style="padding-right: 20px;"  class="glyphicon glyphicon-eye-open">Voir</button>
                     </td>  
                 </tr>
             </table>
            
-            
-        </div>
-
- <div ng-repeat="produits in produit">
             
         </div>
