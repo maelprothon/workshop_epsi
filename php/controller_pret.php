@@ -4,13 +4,16 @@ include_once 'bd.php';
 $bd = new DB();
 $output = array('error' => '');
 session_start();
-//die(var_dump($_POST));
-if (isset($_POST['action'])) {
-    if ($_POST['action'] == "CreatePret" && !empty($_POST['id_user_1']) && !empty($_POST['id_produit'])) {
+//die(var_dump($request));
+$postdata = file_get_contents("php://input");
+$request = json_decode($postdata, true);
+
+if (isset($request['action'])) {
+    if ($request['action'] == "CreatePret" && !empty($request['id_user_1']) && !empty($request['id_produit'])) {
         
         $data = array(
-            'id_user_1' => $_POST['id_user_1'],
-            'id_produit' => $_POST['id_produit'],
+            'id_user_1' => $request['id_user_1'],
+            'id_produit' => $request['id_produit'],
             'key_token' => uniqid(),
             'status' => "En cours"
         );
@@ -20,12 +23,11 @@ if (isset($_POST['action'])) {
     }
     
     //update table pret avec la valeur du status , les commentaires er la notation
-    
-    if ($_POST['action'] == "UpdateValidePret" && $_POST['id']) {
+    else if ($request['action'] == "UpdateValidePret" && $request['id']) {
         $datestart = new DateTime();
         $datestart = $datestart->format("Y-m-d H:i:s");
         $data = array(
-            'id' => $_POST['id'],
+            'id' => $request['id'],
             'datestart' => $datestart
                     );
         $sql = "UPDATE pret set status = 'valider', date_start=:datestart where id = :id";
@@ -33,12 +35,11 @@ if (isset($_POST['action'])) {
     }
     
     //Mis a jour de la table pret à la fin du pret
-    
-    else if ($_POST['action'] == "UpdateEndPret" && $_POST['token']) {
+    else if ($request['action'] == "UpdateEndPret" && $request['token']) {
         $dateend = new DateTime();
         $dateend = $dateend->format("Y-m-d H:i:s");
         $req_token = "SELECT * from pret where token = :token";
-        $response = $bd->query($req_token, array('token' => $_POST['token']));
+        $response = $bd->query($req_token, array('token' => $request['token']));
         if ($response) {
             $data = array(
             'id' => $response[0]->id,
@@ -52,12 +53,12 @@ if (isset($_POST['action'])) {
         }     
     }
     // add commentaire/note à la fin du prêt
-    
-    if ($_POST['action'] == "AddCom_notPret" && $_POST['id'] && $_POST['commentaire'] && $_POST['notation']) {
+
+    else if ($request['action'] == "AddCom_notPret" && $request['id'] && $request['commentaire'] && $request['notation']) {
         $data = array(
-            'id' => $_POST['id'],
-            'commentaire' => $_POST['commentaire'],
-            'notation' => $_POST['notation']
+            'id' => $request['id'],
+            'commentaire' => $request['commentaire'],
+            'notation' => $request['notation']
                     );
         $sql = "UPDATE pret set commentaire = :commentaire, notation = :notation where id = :id";
         $response = $bd->query($sql, $data);
