@@ -43,7 +43,7 @@ angular
                       controller: 'UsersCtrl',
                       controllerAs: 'users'
                     })
-                    .when('/profil', {
+                    .when('/profil/:id', {
                       templateUrl: 'views/profil.html',
                       controller: 'ProfilCtrl',
                       controllerAs: 'profil'

@@ -8,12 +8,12 @@
  * Controller of the webIhmApp
  */
 angular.module('webIhmApp')
-  .controller('ProfilCtrl', function ($scope, $http, $rootScope) {
+  .controller('ProfilCtrl', function ($scope, $http, $rootScope, $routeParams) {
     console.log('ok');
         var req = {
             method: 'POST',
             url: 'http://localhost/workshop_epsi/php/controller_produit.php',
-            data: {action:'getListWithUser', id_user:1},
+            data: {action:'getListWithUser', id_user: $routeParams.id},
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }  
          };
         $http(req)
