@@ -8,7 +8,7 @@ session_start();
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata, true);
 
-if (isset($_POST['action'])) {
+if (isset($request['action'])) {
     if ($request['action'] == "CreatePret" && !empty($request['id_user_1']) && !empty($request['id_produit'])) {
         
         $data = array(
