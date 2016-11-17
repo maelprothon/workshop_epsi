@@ -103,5 +103,31 @@ if (isset($request['action'])) {
         $sql = "UPDATE pret set commentaire = :commentaire, notation = :notation where id = :id";
         $response = $bd->query($sql, $data);
     }
+    else if ($request['action'] == "getListDemandePret" && $request['id_user']){
+        $data = array(
+            'id' => $request['id_user'],
+            );
+        $sql = "SELECT DISTINCT * FROM pret pre LEFT JOIN produit pro ON pre.id_produit=pro.id WHERE pre.id_user_1=:id";
+        $response = $bd->query($sql, $data);
+        if ($response) {
+            $output['result'] = $response;
+        }
+        else{
+            $output['error'] = "Erreur de r�cup�ration liste";
+        }
+    }
+    else if ($request['action'] == "getListPret" && $request['id_user']){
+        $data = array(
+            'id' => $request['id_user'],
+            );
+        $sql = "SELECT DISTINCT * FROM pret pre LEFT JOIN produit pro ON pre.id_produit=pro.id WHERE pro.id_user=:id";
+        $response = $bd->query($sql, $data);
+        if ($response) {
+            $output['result'] = $response;
+        }
+        else{
+            $output['error'] = "Erreur de r�cup�ration liste";
+        }
+    }
 }
 echo json_encode($output);
