@@ -33,9 +33,15 @@ angular
                       controller: 'InscriptionCtrl',
                       controllerAs: 'inscription'
                     })
+                    .when('/produits', {
+                      templateUrl: 'views/produits.html',
+                      controller: 'ProduitsCtrl',
+                      controllerAs: 'produits'
+                      })
                     .when('/listusers', {
                       templateUrl: 'views/listusers.html',
-                      controller: 'UsersCtrl'
+                      controller: 'UsersCtrl',
+                      controllerAs: 'users'
                     })
                     .otherwise({
                         redirectTo: '/home'

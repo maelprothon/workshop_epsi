@@ -1,1 +1,23 @@
-<p>This is the connexion view.</p>
+<h1>Login Page</h1>
+<br>
+
+
+<form ng-show='connect!==true' ng-submit="login(loguser.login, loguser.password)">
+  <div class="form-group row">
+    <label for="Username" class="col-xs-2 col-form-label">User name</label>
+    <div class="col-xs-10">
+      <input class="form-control" ng-model="loguser.login" type="text" value="User name" id="Username">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="password" class="col-xs-2 col-form-label">Password</label>
+    <div class="col-xs-10">
+      <input class="form-control" ng-model="loguser.password"type="password" value="" id="password">
+    </div>
+  </div>
+  <br/>
+  {{loginError}}  
+  <br/><br/>
+  <button class="btn btn-success" ng-click="">Submit</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</form>

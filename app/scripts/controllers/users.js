@@ -2,16 +2,16 @@
 
 /**
  * @ngdoc function
- * @name webIhmApp.controller:InscriptionCtrl
+ * @name webIhmApp.controller:UserCtrl
  * @description
- * # InscriptionCtrl
+ * # UsersCtrl
  * Controller of the webIhmApp
  */
 angular.module('webIhmApp')
-  .controller('UsersCtrl', function ($scope, $http) {
-      console.log("ok");
-      $http.get("http://localhost/workshop_epsi/php/controller_user.php?action=getList")
+  .controller('UsersCtrl', function ($scope, $http) {      
+      console.log('ok');
+      $http.get('http://localhost/workshop_epsi/php/controller_user.php?action=getList')
         .then(function(response) {
-            $scope.users = response.result;
+            $scope.users = response.data.result;
         });
   });

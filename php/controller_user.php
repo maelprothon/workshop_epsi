@@ -8,6 +8,7 @@ $output = array('error' => '');
 session_start();
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata, true);
+//die(var_dump($request));
 if (isset($request['action'])) {
     if ($request['action'] == "create" && !empty($request['name']) && !empty($request['firstname'])
             && !empty($request['password']) && !empty($request['login']) && !empty($request['address']) && !empty($request['codepostal']) && !empty($request['city']) ) {
@@ -25,6 +26,7 @@ if (isset($request['action'])) {
         $output['result'] = $response;
     }
     else if ($request['action'] == "connect" && !empty($request['login']) && !empty($request['password']) ) {
+//        die(var_dump($request));
         $data = array(
             'login' => $request['login'],
             'password' => md5($request['password'])
@@ -32,6 +34,7 @@ if (isset($request['action'])) {
         $sql = "SELECT * FROM utilisateur WHERE login=:login AND mdp=:password";
         $response = $bd->query($sql, $data);
         if ($response) {
+            $output['error'] = 'false';
             $output['result'] = $response;
             $_SESSION['user'] = $response[0]->login;
         }
