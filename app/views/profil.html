@@ -10,8 +10,8 @@
                 <tr class="my_td" ng-repeat="produit in produits">
                     <td>{{produit.nom}} <img  class="my_img" src="images/{{produit.id}}.jpg"></td>
                     <td>
-                        <button ng-click="reserveproduit(produit)" style="padding-right: 20px; padding-left: 10px; "  class="glyphicon glyphicon-ok">Réserver</button>
-                        <a href="#/produit/{{produit.id}}"><button style="padding-right: 20px;"  class="glyphicon glyphicon-eye-open">Voir</button></a>
+                        <button ng-click="reserveproduit(produit)" style="padding-right: 20px; padding-left: 10px; color: #18BC9C"  class="glyphicon glyphicon-ok">Réserver</button>
+                        <a href="#/produit/{{produit.id}}"><button style="padding-right: 20px; color: #18BC9C"  class="glyphicon glyphicon-eye-open">Voir</button></a>
                     </td>  
                 </tr>
             </table>

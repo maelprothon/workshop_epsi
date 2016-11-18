@@ -1,5 +1,8 @@
 <?php
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Content-Type");
+
 include_once 'bd.php';
 $bd = new DB();
 $output = array('error' => '');
@@ -32,6 +35,41 @@ if (isset($request['action'])) {
                     );
         $sql = "UPDATE pret set status = 'valider', date_start=:datestart where id = :id";
         $response = $bd->query($sql, $data);
+        $datediff = "SELECT pre.id_user_1 AS id_sub, pro.id_user AS id_add from pret pre left join produit pro ON pro.id=pre.id_produit where pre.id=:id";
+        
+        $diff = $bd->query($datediff, array('id'=>$request['id']));
+//        $diffs = explode(":", $diff[0]->diff);
+//        $hours = intval($diffs[0]) + 1;
+        //Soustraire point
+        $sub = array(
+            'id' => $diff[0]->id_sub,
+        );
+        $sql_cagnotte_sub = "SELECT cagnotte FROM utilisateur where id=:id";
+        
+        $cagnotte_sub = $bd->query($sql_cagnotte_sub, $sub);
+        $point_sub = $cagnotte_sub[0]->cagnotte - 10;
+        $data_sub = array(
+            'id' => $diff[0]->id_sub,
+            'cagnotte' => $point_sub,
+        );
+        $sql_update_cagnotte_sub = "UPDATE utilisateur set cagnotte = :cagnotte where id=:id";
+        $cagnotte_sub = $bd->query($sql_update_cagnotte_sub, $data_sub);
+        
+        //Add point
+        $add = array(
+            'id' => $diff[0]->id_add,
+        );
+        $sql_cagnotte_add = "SELECT cagnotte FROM utilisateur where id=:id";
+        
+        $cagnotte_add = $bd->query($sql_cagnotte_add , $add);
+        $point_add = $cagnotte_add[0]->cagnotte + 10;
+        $data_add = array(
+            'id' => $diff[0]->id_add,
+            'cagnotte' => $point_add,
+        );
+        $sql_update_cagnotte_add = "UPDATE utilisateur set cagnotte = :cagnotte where id=:id";
+        $cagnotte_add = $bd->query($sql_update_cagnotte_add, $data_add);
+        $output['result']['cagnotte'] = $point_add;
     }
     
     //Mis a jour de la table pret à la fin du pret
@@ -52,40 +90,6 @@ if (isset($request['action'])) {
                  $data = array(
             'id' =>  $response[0]->id,
            );
-        $datediff = "SELECT TIMEDIFF(pre.date_end,pre.date_start) AS diff, pre.id_user_1 AS id_sub, pro.id_user AS id_add from pret pre left join produit pro ON pro.id=pre.id_produit where pre.id=:id";
-        
-        $diff = $bd->query($datediff, $data);
-        $diffs = explode(":", $diff[0]->diff);
-        $hours = intval($diffs[0]) + 1;
-        //Soustraire point
-        $sub = array(
-            'id' => $diff[0]->id_sub,
-        );
-        $sql_cagnotte_sub = "SELECT cagnotte FROM utilisateur where id=:id";
-        
-        $cagnotte_sub = $bd->query($sql_cagnotte_sub, $sub);
-        $point_sub = $cagnotte_sub[0]->cagnotte - $hours;
-        $data_sub = array(
-            'id' => $diff[0]->id_sub,
-            'cagnotte' => $point_sub,
-        );
-        $sql_update_cagnotte_sub = "UPDATE utilisateur set cagnotte = :cagnotte where id=:id";
-        $cagnotte_sub = $bd->query($sql_update_cagnotte_sub, $data_sub);
-        
-        //Add point
-        $add = array(
-            'id' => $diff[0]->id_add,
-        );
-        $sql_cagnotte_add = "SELECT cagnotte FROM utilisateur where id=:id";
-        
-        $cagnotte_add = $bd->query($sql_cagnotte_add , $add);
-        $point_add = $cagnotte_add[0]->cagnotte + $hours;
-        $data_add = array(
-            'id' => $diff[0]->id_add,
-            'cagnotte' => $point_add,
-        );
-        $sql_update_cagnotte_add = "UPDATE utilisateur set cagnotte = :cagnotte where id=:id";
-        $cagnotte_add = $bd->query($sql_update_cagnotte_add, $data_add);
         
         }
         else {
@@ -120,7 +124,7 @@ if (isset($request['action'])) {
         $data = array(
             'id' => $request['id_user'],
             );
-        $sql = "SELECT DISTINCT * FROM pret pre LEFT JOIN produit pro ON pre.id_produit=pro.id WHERE pro.id_user=:id";
+        $sql = "SELECT pre.id as idpret, pre.status, pre.id_produit, pre.id_user_1, pro.* FROM pret pre LEFT JOIN produit pro ON pre.id_produit=pro.id WHERE pro.id_user=:id AND pre.id_user_1!=:id";
         $response = $bd->query($sql, $data);
         if ($response) {
             $output['result'] = $response;
@@ -130,4 +134,5 @@ if (isset($request['action'])) {
         }
     }
 }
+
 echo json_encode($output);

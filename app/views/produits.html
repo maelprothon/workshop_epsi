@@ -1,5 +1,16 @@
- 
-    <div class="col-md-4 border">
+    <div class="col-lg-12 border">
+        <h1>Votre ratio</h1><br/>
+        <div ng-show="user.cagnotte>=10">
+            <span class="label label-success" style="font-size: 25px;">{{ user.cagnotte }} crédits</span>
+        </div>
+        <div ng-show="user.cagnotte>=0 && user.cagnotte<10">
+            <span class="label label-warning" style="font-size: 25px;">{{ user.cagnotte }} crédits</span>
+        </div>
+        <div ng-show="user.cagnotte<0">
+            <span class="label label-danger" style="font-size: 25px;">{{ user.cagnotte }} crédits</span>
+        </div>
+    </div>
+    <div class="col-md-4 border" style="margin: 10px;">
         <h1>Create a product</h1>
         <form name="ajoutProduit" ng-controller="InscriptionCtrl" ng-submit="soumissions(ajoutProduit.$valid)">
 	  <div class="form-group">
@@ -24,14 +35,40 @@
 	  <button class="btn btn-default" type="submit">Envoyer</button>
 	</form>  
     </div>
-    <div class="col-lg-4 border">
-        <h1>Your Products</h1>
+<div class="col-lg-4 border" style="margin: 10px;">
+        <h1>Tes produits</h1>
         <div ng-repeat="produits in produitList" class="borderwhite">
             {{produits.nom}} <span ng-click="eraseproduit(produits)" class="glyphicon glyphicon-remove"></span>
         </div>
     </div>
-    <div class="col-lg-4 border">
-        <h1>Your Products</h1>
+<div class="col-lg-12 border" style="margin: 10px;">
+        <h1>Tes demandes</h1>
+        <table  class ="table" >
+            <tr class ="my_tr">
+                <th class="my_th">Produit</th>
+                <th class="my_th">Statut</th>
+                <th class="my_th">Action</th>
+            </tr>
+            <tr class="my_td" ng-repeat="pret in pretList">
+                <td>{{pret.nom}} <img  class="my_img" src="images/{{pret.id_produit}}.jpg"></td>
+                <td>
+                    <div ng-show="pret.status=='Finish'">
+                        <span class="label label-danger" style="font-size: 25px;">Terminé</span>
+                    </div>
+                    <div ng-show="pret.status=='En cours'">
+                        <span class="label label-warning" style="font-size: 25px;">En cours</span>
+                    </div>
+                    <div ng-show="pret.status=='valider'">
+                        <span class="label label-success" style="font-size: 25px;">Validé</span>
+                    </div>
+                </td>  
+                <td>
+                    <div ng-show="pret.status=='En cours'">
+                         <button ng-click="validpret(pret)" style="padding-right: 20px; padding-left: 10px; color: #18BC9C"  class="glyphicon glyphicon-ok">Valider</button>
+                    </div>
+                </td>  
+            </tr>
+        </table>
     </div>
 
  

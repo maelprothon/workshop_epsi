@@ -27,7 +27,10 @@ class DB {
 
     public function query($sql, $data = array()) {
         $req = $this->db->prepare($sql);
-        $req->execute($data);
+        $test = $req->execute($data);
+        if ( !$test ) {
+            die(var_dump($req->errorCode()));
+        }
         // warning learning à voir pour le fetchAll
         return $req->fetchAll(PDO::FETCH_OBJ);
     }
